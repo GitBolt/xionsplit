@@ -12,7 +12,7 @@ import {
 } from "./types";
 
 // Constants
-export const CONTRACT_ADDRESS = " xion1wjp383nyfa6ys8ng3xfv3f9x99llgydjcsfez3tzhp0hsuswvfzq9zhpdh"; // Replace with your actual contract address
+export const CONTRACT_ADDRESS = "xion16rk62lsp89g8ehm9yf3fs0nsdxd4aqydmz9vah4lfncg8pp8nzqqmwwnun"; // Replace with your actual contract address
 export const EXPLORER_URL = "https://explorer.burnt.com/xion-testnet-2";
 
 // Format address for display (first 6 and last 4 chars)
