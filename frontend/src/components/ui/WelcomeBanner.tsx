@@ -67,12 +67,7 @@ export default function WelcomeBanner({ username, onCreateGroup, onJoinGroup }: 
             </div>
           </div>
           
-          <div className="mt-6 pt-6 border-t border-white/20 text-sm text-white/70 flex flex-wrap justify-between items-center gap-4">
-            <div>
-              Powered by <a href="https://burnt.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Burnt Finance</a> on the XION blockchain
-            </div>
-      
-          </div>
+    
         </div>
       </div>
     </div>
