@@ -448,7 +448,7 @@ export default function SettlePage() {
               Settlement Coming Soon
             </h2>
             <p className="text-white/90 max-w-3xl">
-              We're working on implementing the settlement functionality. Soon you'll be able to settle your debts with just a few clicks. Stay tuned for updates!
+              We&apos;re working on implementing the settlement functionality. Soon you&apos;ll be able to settle your debts with just a few clicks. Stay tuned for updates!
             </p>
           </div>
         </div>
@@ -473,7 +473,7 @@ export default function SettlePage() {
             </div>
             <h2 className="text-xl font-semibold mb-2">All Settled Up!</h2>
             <p className="text-muted-foreground max-w-md mx-auto">
-              You don't have any debts to settle in this group. If you add expenses, any resulting debts will appear here.
+              You don&apos;t have any debts to settle in this group. If you add expenses, any resulting debts will appear here.
             </p>
           </div>
         ) : (
@@ -490,7 +490,7 @@ export default function SettlePage() {
                 <div className="p-4">
                   {debts.filter(debt => debt.from === account?.bech32Address).length === 0 ? (
                     <div className="text-center py-6">
-                      <p className="text-muted-foreground">You don't owe anyone in this group.</p>
+                      <p className="text-muted-foreground">You don&apos;t owe anyone in this group.</p>
                     </div>
                   ) : (
                     <div className="space-y-3">

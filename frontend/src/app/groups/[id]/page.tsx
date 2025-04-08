@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
 import {
   useAbstraxionAccount,
@@ -45,26 +45,28 @@ export default function GroupDetailsPage() {
     txHash: '',
   });
   
-  // Define fetchGroupData outside useEffect so it can be used elsewhere
-  const fetchGroupData = async () => {
+  // Fetch group details and expenses 
+  const fetchGroupData = useCallback(async () => {
     if (!queryClient) return;
     
     setLoading(true);
+    setError(null);
+    
     try {
       // Fetch group details
-      const groupDetails = await getGroup(queryClient, groupId);
-      if (groupDetails) {
-        setGroup(groupDetails);
+      const groupResult = await getGroup(queryClient, groupId);
+      if (groupResult) {
+        setGroup(groupResult);
       }
       
-      // Fetch expenses
+      // Fetch group expenses
       const expensesResult = await getGroupExpenses(queryClient, groupId);
       if (expensesResult) {
         setExpenses(expensesResult.expenses);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error fetching group data:", error);
-      setError("Failed to load group data. Please try again.");
+      setError(error.message || "Failed to load group data. Please try again.");
       
       // Show error toast
       showToast({
@@ -76,14 +78,14 @@ export default function GroupDetailsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [queryClient, groupId, showToast]);
   
   // Fetch group details and expenses
   useEffect(() => {
     if (queryClient) {
       fetchGroupData();
     }
-  }, [queryClient, groupId]);
+  }, [queryClient, groupId, fetchGroupData]);
   
   const handleAddExpense = () => {
     if (!account?.bech32Address) {

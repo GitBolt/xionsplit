@@ -474,10 +474,10 @@ export default function GroupBalancesPage() {
       </div>
       <h3 className="text-lg font-medium mb-2">No Balance Data</h3>
       <p className="text-muted-foreground mb-2">
-        You're involved in expenses, but no balance data is available.
+        You&apos;re involved in expenses, but no balance data is available.
       </p>
       <p className="text-xs text-muted-foreground">
-        This could happen if you're not directly involved in any debt relationships.
+        This could happen if you&apos;re not directly involved in any debt relationships.
       </p>
     </div>
   ) : null;
@@ -516,9 +516,9 @@ export default function GroupBalancesPage() {
           <circle cx="12" cy="7" r="4" />
         </svg>
       </div>
-      <h3 className="text-lg font-medium mb-2">You're Not Involved Yet</h3>
+      <h3 className="text-lg font-medium mb-2">You&apos;re Not Involved Yet</h3>
       <p className="text-muted-foreground">
-        You're not part of any expenses in this group yet.
+        You&apos;re not part of any expenses in this group yet.
       </p>
     </div>
   ) : null;

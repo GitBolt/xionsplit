@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import {
@@ -33,7 +33,7 @@ export default function HomePage() {
   const [refreshing, setRefreshing] = useState(false);
   
   // Fetch user's groups
-  const fetchGroups = async () => {
+  const fetchGroups = useCallback(async () => {
     if (!queryClient || !account?.bech32Address) return;
     
     setLoading(true);
@@ -47,7 +47,7 @@ export default function HomePage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [queryClient, account?.bech32Address]);
   
   // Refresh groups data
   const handleRefresh = async () => {
@@ -59,7 +59,7 @@ export default function HomePage() {
   
   useEffect(() => {
     fetchGroups();
-  }, [queryClient, account?.bech32Address]);
+  }, [queryClient, account?.bech32Address, fetchGroups]);
   
   return (
     <Layout>
@@ -187,7 +187,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-xl font-semibold mb-2">No Groups Yet</h3>
                 <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                  You haven't created or joined any groups yet. Create a new group or join an existing one to get started.
+                  You haven&apos;t created or joined any groups yet. Create a new group or join an existing one to get started.
                 </p>
                 <div className="flex flex-wrap gap-3 justify-center">
                   <button 

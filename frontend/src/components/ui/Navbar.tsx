@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { 
   useAbstraxionAccount, 
@@ -18,31 +18,28 @@ export default function Navbar() {
   const { data: account } = useAbstraxionAccount();
   const { client: queryClient } = useAbstraxionClient();
   const [, setShowModal] = useModal();
+  const [refreshing, setRefreshing] = useState(false);
   const [balance, setBalance] = useState<string>("0");
   const [copied, setCopied] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   
-  // Fetch user's XION balance
-  const fetchBalance = async () => {
+  // Fetch account balance
+  const fetchBalance = useCallback(async () => {
     if (!queryClient || !account?.bech32Address) return;
     
     setRefreshing(true);
     try {
-      const result = await queryClient.getBalance(account.bech32Address, "uxion");
-      if (result) {
-        // Convert from uxion (microxion) to XION
-        const xionBalance = (parseInt(result.amount) / 1000000).toFixed(6);
-        setBalance(xionBalance);
-        setLastUpdated(new Date());
-      }
+      const response = await queryClient.getBalance(account.bech32Address, "uxion");
+      // Convert uxion to XION and format as string with 6 decimal places
+      setBalance((parseFloat(response.amount) / 1000000).toFixed(6));
+      setLastUpdated(new Date());
     } catch (error) {
       console.error("Error fetching balance:", error);
       setBalance("Error");
     } finally {
       setRefreshing(false);
     }
-  };
+  }, [queryClient, account?.bech32Address]);
   
   useEffect(() => {
     fetchBalance();
@@ -51,7 +48,7 @@ export default function Navbar() {
     const intervalId = setInterval(fetchBalance, 30000);
     
     return () => clearInterval(intervalId);
-  }, [queryClient, account?.bech32Address]);
+  }, [queryClient, account?.bech32Address, fetchBalance]);
   
   const copyAddress = () => {
     if (!account?.bech32Address) return;

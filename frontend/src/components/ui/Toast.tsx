@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { 
   CheckCircleIcon, 
   XCircleIcon, 
@@ -34,6 +34,17 @@ export default function Toast({
 }: ToastProps) {
   const [isClosing, setIsClosing] = useState(false);
   
+  // Handle the close animation
+  const handleClose = useCallback(() => {
+    setIsClosing(true);
+    
+    // Wait for animation to complete before fully closing
+    setTimeout(() => {
+      setIsClosing(false);
+      onClose();
+    }, 300);
+  }, [onClose]);
+  
   useEffect(() => {
     if (isVisible && autoClose) {
       const timer = setTimeout(() => {
@@ -42,18 +53,7 @@ export default function Toast({
       
       return () => clearTimeout(timer);
     }
-  }, [isVisible, autoClose, duration]);
-  
-  // Handle the close animation
-  const handleClose = () => {
-    setIsClosing(true);
-    
-    // Wait for animation to complete before fully closing
-    setTimeout(() => {
-      setIsClosing(false);
-      onClose();
-    }, 300);
-  };
+  }, [isVisible, autoClose, duration, handleClose]);
   
   // Don't render if not visible
   if (!isVisible) return null;
